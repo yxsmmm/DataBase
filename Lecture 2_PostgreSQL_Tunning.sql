@@ -232,3 +232,34 @@ EXPLAIN SELECT s.w_id
 FROM stock s
 WHERE s.i_id='7';	     
 			      sequantial scan 就是因为primary key的顺序不一样
+			      
+			      
+			      
+			      
+			      
+			      
+			      给已存在的表添加主键 https://pg.sjk66.com/postgresql/primary-key.html
+			      
+			      ALTER TABLE TABLE ADD PRIMARY KEY (column_1, column_2);
+			      
+			      
+			      CREATE TABLE products (
+ product_no INTEGER,
+ description TEXT,
+ product_cost NUMERIC
+);
+			     
+			      ALTER TABLE products 
+ADD PRIMARY KEY (product_no);
+			      
+			      移除主键
+			      ALTER TABLE TABLE DROP CONSTRAINT primary_key_constraint;
+			      
+			      ALTER TABLE table
+DROP CONSTRAINT products_pkey;
+			      
+			      给已存在的表定义外键 https://pg.sjk66.com/postgresql/foreign-key.html
+			      
+			      ALTER TABLE child_table 
+ADD CONSTRAINT constraint_name FOREIGN KEY (c1) REFERENCES parent_table (p1);
+			      
