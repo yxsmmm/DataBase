@@ -49,16 +49,69 @@ SELECT * FROM warehouse1 w NATURAL JOIN stock1 s WHERE s.w_id = w.w_id;
 交叉连接
 交叉连接不带WHERE子句，
 
+外连接
+外连接不只列出与连接条件相匹配的行，而且还加上左表或右表或两个表中所有符合搜索条件的
+数据行。
+
+左连接
+SELECT * from Table_A A LEFT JOIN Table_B B ON A.id
+根据条件用右表匹配左表，不能匹配的其他表的字段都置空Null
+
+Semi-join 
+When the inner table is only used for filtering PostgreSQL can use a Semi-Join
+
+
+Denormalization 
+normalised Schema
+A normalised schema requires to join tables on the equality of their primary and 
+foreign keys. Joins can expensive.
+
+Views
+We can create views, but they are for convenience only, They do not change
+the performance from that of the underlying normalised schema (the view definition
+is used by the optimizer as would a subquery)
+
+CREATE VIEW vall AS SELECT *
+FROM warehouse w NATURAL JOIN stock s NATURAL JOIN item i;
+
+
+Prepare 
+When the prepare statement is executed, the specified query is parsed,
+analyzed and rewritten. When an execute command is subsequently issued
+the prepared query is planned and executed if a prepared statement is executed
+
+Planner Method Configuration 
+It is not recommended configure the optimizer by turning off some methods
+https://www.postgresql.org/docs/13/runtime-config-query.html
 
 
 
+Why are Queries Slow
+
+Wrong design (See next lectures);
+Poor configuration (increase work_mem);
+Tuples are scattered, tables and indexes are bloated (VACUUM, CLUSTER,
+VACUUM FULL, reindexing);
+Missing indexes (CREATE INDEX);
+PostgreSQL does not choose the best plan (ANALYZE);
 
 
 
+In Conclusion
 
+Understand the optimizer;
+Tune the data (normalise, denormalise, index, create views, materialised) for
+everyone;
+Help the system maintain good statistics;
+Hard-tune the queries as a last resort and at every users' current and future risk.
 
+重点******************！！！！！！！！！！！！！！！！！！TODO
+可能出现的问题
+similar question with tutiral
 
+run example show the execution plan
 
+given 2 table shows the query do anti-join or nest-loop join 
 
 
 
