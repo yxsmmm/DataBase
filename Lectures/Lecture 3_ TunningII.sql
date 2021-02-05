@@ -174,3 +174,58 @@ WHERE s.s_qty > 500;
 EXPLAIN ANALYZE EXECUTE q;
 
 DEALLOCATE q;
+
+
+
+
+Denormalization 
+normalised Schema
+A normalised schema requires to join tables on the equality of their primary and 
+foreign keys. Joins can expensive.
+
+Views
+We can create views, but they are for convenience only, They do not change
+the performance from that of the underlying normalised schema (the view definition
+is used by the optimizer as would a subquery)
+
+CREATE VIEW vall AS SELECT *
+FROM warehouse w NATURAL JOIN stock s NATURAL JOIN item i;
+
+
+Prepare 
+When the prepare statement is executed, the specified query is parsed,
+analyzed and rewritten. When an execute command is subsequently issued
+the prepared query is planned and executed if a prepared statement is executed
+
+Planner Method Configuration 
+It is not recommended configure the optimizer by turning off some methods
+https://www.postgresql.org/docs/13/runtime-config-query.html
+
+
+
+Why are Queries Slow
+
+Wrong design (See next lectures);
+Poor configuration (increase work_mem);
+Tuples are scattered, tables and indexes are bloated (VACUUM, CLUSTER,
+VACUUM FULL, reindexing);
+Missing indexes (CREATE INDEX);
+PostgreSQL does not choose the best plan (ANALYZE);
+
+
+
+In Conclusion
+
+Understand the optimizer;
+Tune the data (normalise, denormalise, index, create views, materialised) for
+everyone;
+Help the system maintain good statistics;
+Hard-tune the queries as a last resort and at every users' current and future risk.
+
+重点******************！！！！！！！！！！！！！！！！！！TODO
+可能出现的问题
+similar question with tutiral
+
+run example show the execution plan
+
+given 2 table shows the query do anti-join or nest-loop join 
