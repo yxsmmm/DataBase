@@ -1,0 +1,68 @@
+https://zhuanlan.zhihu.com/p/46037197
+在多表查询的时候如果是复制自己再和自己连接 称之为自连接
+不同张表中连接查询分为内连接，交叉连接和外连接
+
+内连接根据所使用的比较方式的不同又分为
+等值连接，自然连接，和不等连接三种
+连接的结果只列出这些表中与连接条件相匹配的数据行。
+
+外连接不只列出与连接条件相匹配的行，而是列出左表，右表或两个表中所有符合搜索条件的数
+LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN
+
+自连接
+如果用的是关系型数据库，早期开发中估计这么干，现在估计用的都是图数据库。
+我们建一张表 bus_sche，为了简单，表中只有上一站地点和下一站地点及唯一标识，然后插入一些模拟数据。
+
+我就可以通过自连接查询上下站关系找到坐车线路
+
+SELECT b.lastStation,b.nextStation,a.lastStation,a.nextStation 
+FROM bus_sche a, bus_sche b 
+WHERE b.nextStation = a.lastStation;
+只在一张表中查询，表 bus_sche 使用了两个别名 bus_sche a, bus_sche b，因此相当于有两张表，
+用 WHERE条件连接查询，「 实际只有一张表在自我连接查询」。
+一句话，「 一张表，使用多个别名，表面上进行多表连接查询，这就是自连接查询」。
+
+inner join的结果实际上是笛卡尔积
+SELECT * from Table_A JOIN Table_B;
+SELECT * from Table_A INNER JOIN Table_B;
+内连接可以没有连接条件，没有条件之后的查询结果，会保留所有结果（笛卡尔集），与后面分享的交叉连接差不多。
+
+等值连接
+
+在连接条件中使用等于号（=）运算符比较被连接列的列值，其查询结果中列出被连接表中的所有列，包括其中的重复列。
+
+SELECT * from Table_A A JOIN Table_B B ON A.id = B.id;
+查询结果，注意列数是 4 列，两张表的字段直接拼接在一起，重复的字段在后面添加数字序列以做区分
+
+不等连接是实用的运算符号不一样
+SELECT * from Table_A A JOIN Table_B B On A.id < B.id;
+根据On之后的条件一个个作比较，列出满足条件的所有结果
+
+自然连接 
+SELECT * FROM warehouse1 w NATURAL JOIN stock1 s WHERE s.w_id = w.w_id;
+在连接条件中使用等号运算符比较被连接的列值，
+但它使用选择列表指出查询结果集合中所包括的列
+并删除连接表中的重复列 添加条件用WHERE而不是ON
+
+在连接查询中，通常不用WHERE 而是用ON, 因为WHERE没有ON的效率高
+
+交叉连接
+交叉连接不带WHERE子句，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
