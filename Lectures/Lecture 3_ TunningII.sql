@@ -1,4 +1,4 @@
-﻿CREATE  TEMPORARY TABLE stock1 AS
+CREATE  TEMPORARY TABLE stock1 AS
 SELECT * FROM stock s;
 
 CREATE  TEMPORARY TABLE warehouse1 AS
@@ -8,9 +8,13 @@ SELECT w.w_name
 FROM  warehouse1 w NATURAL JOIN stock1 s
 WHERE w.w_city='Singapore' AND s.i_id=33;
 
+
 EXPLAIN ANALYZE SELECT w.w_name
 FROM  warehouse1 w NATURAL JOIN stock1 s
 WHERE w.w_city='Singapore' AND s.i_id=33;
+
+********我们都知道SQL的join关联表的使用方式，但是这次聊的是实现join的算法，join有三种算法，分别是Nested Loop Join，Hash join，Sort Merge Join。分别是三种不同的join algo
+NLJ是通过两层循环，用第一张表做Outter Loop，第二张表做Inner Loop，Outter Loop的每一条记录跟Inner Loop的记录作比较，符合条件的就输出
 
 INSERT INTO warehouse1 SELECT * FROM warehouse;
 
